@@ -8,11 +8,19 @@ val springBootVersion: String by project
 val kotlinVersion: String by project
 val jacksonVersion: String by project
 
+plugins {
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
+    kotlin("jvm")
+    kotlin("plugin.spring")
+}
+
 group = groupName
 version = projectVersion
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
+    mavenCentral()
 }
 
 dependencies {

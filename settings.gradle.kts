@@ -10,3 +10,5 @@ pluginManagement {
         kotlin("plugin.spring") version kotlinVersion
     }
 }
+
+rootProject.name = "CoreService"

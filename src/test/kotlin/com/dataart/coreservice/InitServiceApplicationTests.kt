@@ -8,7 +8,7 @@ import org.springframework.boot.test.web.client.*
 import org.springframework.http.HttpStatus
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CoreServiceApplicationTests(@Autowired val testRest: TestRestTemplate) {
+class InitServiceApplicationTests(@Autowired val testRest: TestRestTemplate) {
 
     @Test
     fun coreServiceControllerTest() {

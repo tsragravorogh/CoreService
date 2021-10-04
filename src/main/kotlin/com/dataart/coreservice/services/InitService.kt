@@ -1,9 +1,9 @@
-package com.dataart.coreservice
+package com.dataart.coreservice.services
 
 import org.springframework.stereotype.Service
 
 @Service
-class CoreService {
+class InitService {
     private val answer = "Hello world! We are CORE!";
 
     fun getMessage() = answer;
