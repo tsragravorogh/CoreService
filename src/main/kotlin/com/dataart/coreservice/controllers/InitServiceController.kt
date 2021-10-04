@@ -1,14 +1,14 @@
 package com.dataart.coreservice.controllers
 
-import com.dataart.coreservice.CoreService
+import com.dataart.coreservice.services.InitService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class CoreServiceController {
+class InitServiceController {
     @GetMapping
     fun helloWorld(): String {
-        val coreService = CoreService();
-        return coreService.getMessage();
+        val initService = InitService();
+        return initService.getMessage();
     }
 }
