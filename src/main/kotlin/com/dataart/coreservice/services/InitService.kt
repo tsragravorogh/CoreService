@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class InitService {
-    private val answer = "Hello world! We are CORE!";
+    private val answer = "Hello world! We are CORE!"
 
-    fun getMessage() = answer;
+    fun getMessage() = answer
 }
