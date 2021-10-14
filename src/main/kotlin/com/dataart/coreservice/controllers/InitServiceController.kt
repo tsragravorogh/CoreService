@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 class InitServiceController {
     @GetMapping
     fun helloWorld(): String {
-        val initService = InitService();
-        return initService.getMessage();
+        val initService = InitService()
+        return initService.getMessage()
     }
 }
-

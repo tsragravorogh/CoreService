@@ -11,6 +11,8 @@ val jacksonVersion: String by project
 val postgresqlVersion: String by project
 val flywaydbVersion: String by project
 
+val detektVersion: String by project
+
 plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
@@ -18,6 +20,7 @@ plugins {
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
     kotlin("plugin.allopen")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 group = groupName
@@ -29,27 +32,31 @@ repositories {
 }
 
 dependencies {
-    //Jackson
+    // Jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
 
-    //Kotlin
+    // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    //SpringBoot
+    // SpringBoot
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
 
-    //postgre
+    // postgre
     runtimeOnly("org.postgresql:$postgresqlVersion")
 
-    //flyway
+    // flyway
     compileOnly("org.flywaydb:$flywaydbVersion")
 
+    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
+    detekt("io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion")
 }
+
+apply(from = "detekt.gradle")
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {

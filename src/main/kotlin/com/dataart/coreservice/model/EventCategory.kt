@@ -20,7 +20,7 @@ data class EventCategory(
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     var category: Category,
 
-    //owner
+    // owner
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     var event: Event

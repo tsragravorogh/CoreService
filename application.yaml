@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/core_service
     username: postgres
-    password: ${12345678}
+    password: 12345678
 
   jpa:
     hibernate:

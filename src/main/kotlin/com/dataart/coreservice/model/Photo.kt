@@ -42,4 +42,4 @@ data class Photo(
     @OneToMany(mappedBy = "photo", cascade = [CascadeType.ALL])
     var likePhotos: MutableList<LikePhoto>,
 
-    )
+)
