@@ -25,7 +25,7 @@ HTTP response status code: 401
 
 ###Registration:
 
-PUT(“/registration”)
+POST(“/registration”)
 <pre>body:{
     “username”:”name”,
     “email”:”123@abc.xyz”,
