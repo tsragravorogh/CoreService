@@ -1,10 +1,7 @@
 package com.dataart.coreservice
 
-import org.junit.jupiter.api.AfterEach
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
@@ -13,28 +10,21 @@ import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
 
 @SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    webEnvironment = RANDOM_PORT,
+    classes = [CoreServiceApplication::class]
 )
 @Testcontainers
-class DataBaseInTestcontainers(
-    @Autowired val testRest: TestRestTemplate,
-    @Autowired val jdbc: JdbcTemplate
-) {
-
-    @AfterEach
-    fun cleanup() {
-        jdbc.execute("truncate table messages")
-    }
+abstract class AbstractTestClass {
 
     companion object {
         @Container
-        val container = PostgreSQLContainer<Nothing>(DockerImageName.parse("postgres:13-alpine")).apply {
-            withDatabaseName("core_service")
-            withUsername("postgres")
-            withPassword("12345678")
-            withInitScript("db/migration/V1__init.sql")
-        }
-
+        val container = PostgreSQLContainer<Nothing>(DockerImageName.parse("postgres:13-alpine"))
+            .apply {
+                withDatabaseName("core_service")
+                withUsername("postgres")
+                withPassword("12345678")
+                withInitScript("db/migration/V1__init.sql")
+            }
 
         @JvmStatic
         @DynamicPropertySource
