@@ -19,8 +19,6 @@ import javax.persistence.Table
 @Entity
 @Table(name = "users")
 data class User(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
 
     @Column(nullable = false)
     var name: String,
@@ -35,13 +33,11 @@ data class User(
     var password: String,
 
     var linkAva: String,
+) {
 
-    @CreatedDate
-    @Column(nullable = false)
-    var createdDt: Instant,
-
-    @LastModifiedDate
-    var updatedDt: Instant,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
 
     //  owner side
     @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
@@ -50,18 +46,24 @@ data class User(
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "event_id")]
     )
-    var events: MutableList<Event>,
+    var events: MutableList<Event> = mutableListOf()
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
-    var messages: MutableList<Message>,
+    var messages: MutableList<Message> = mutableListOf()
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
-    var photos: MutableList<Photo>,
+    var photos: MutableList<Photo> = mutableListOf()
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
-    var likeEvents: MutableList<LikeEvent>,
+    var likeEvents: MutableList<LikeEvent> = mutableListOf()
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
-    var likePhotos: MutableList<LikePhoto>,
+    var likePhotos: MutableList<LikePhoto> = mutableListOf()
 
-)
+    @CreatedDate
+    @Column(nullable = false)
+    var createdDt: Instant = Instant.now()
+
+    @LastModifiedDate
+    var updatedDt: Instant = Instant.now()
+}
