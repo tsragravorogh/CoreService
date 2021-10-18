@@ -12,8 +12,6 @@ import javax.persistence.Table
 @Entity
 @Table(name = "users_events")
 data class UserEvent(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
@@ -22,4 +20,8 @@ data class UserEvent(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     var event: Event,
-)
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
+}

@@ -35,6 +35,7 @@ class DataBaseInTestcontainers(
             withInitScript("db/migration/V1__init.sql")
         }
 
+
         @JvmStatic
         @DynamicPropertySource
         fun datasourceConfig(registry: DynamicPropertyRegistry) {

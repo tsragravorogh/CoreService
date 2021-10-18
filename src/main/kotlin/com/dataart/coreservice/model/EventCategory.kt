@@ -13,9 +13,6 @@ import javax.persistence.Table
 @Entity
 data class EventCategory(
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     var category: Category,
@@ -24,5 +21,9 @@ data class EventCategory(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     var event: Event
+) {
 
-)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
+}

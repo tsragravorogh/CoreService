@@ -17,18 +17,8 @@ import javax.persistence.Table
 @Entity
 data class Message(
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
-
     @Column(nullable = false)
     var text: String,
-
-    @CreatedDate
-    @Column(nullable = false)
-    var createdDt: Instant,
-
-    @LastModifiedDate
-    var updatedDt: Instant,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
@@ -37,5 +27,16 @@ data class Message(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     var event: Event
+) {
 
-)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
+
+    @CreatedDate
+    @Column(nullable = false)
+    var createdDt: Instant = Instant.now()
+
+    @LastModifiedDate
+    var updatedDt: Instant = Instant.now()
+}

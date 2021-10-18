@@ -20,31 +20,26 @@ import javax.persistence.Table
 @Table(name = "events")
 @Entity
 data class Event(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
 
     @Column(nullable = false)
     var name: String,
 
     var description: String,
 
-    @CreatedDate
-    @Column(nullable = false)
-    var createdDt: Instant,
-
-    @LastModifiedDate
-    var updatedDt: Instant,
-
     var linkAva: String,
 
     // главная сторона owner
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = false)
-    var creatorId: User,
+    var creatorId: User
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
 
     // зависимая сторона
     @ManyToMany(mappedBy = "events", cascade = [CascadeType.ALL])
-    var users: MutableList<User>,
+    var users: MutableList<User> = mutableListOf()
 
     // главная сторона owner
     @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
@@ -53,15 +48,21 @@ data class Event(
         joinColumns = [JoinColumn(name = "event_id")],
         inverseJoinColumns = [JoinColumn(name = "category_id")]
     )
-    var categories: MutableList<Category>,
+    var categories: MutableList<Category> = mutableListOf()
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL])
-    var messages: MutableList<Message>,
+    var messages: MutableList<Message> = mutableListOf()
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL])
-    var photos: MutableList<Photo>,
+    var photos: MutableList<Photo> = mutableListOf()
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL])
-    var likeEvents: MutableList<LikeEvent>
+    var likeEvents: MutableList<LikeEvent> = mutableListOf()
 
-)
+    @CreatedDate
+    @Column(nullable = false)
+    var createdDt: Instant = Instant.now()
+
+    @LastModifiedDate
+    var updatedDt: Instant = Instant.now()
+}

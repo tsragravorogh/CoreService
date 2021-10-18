@@ -13,6 +13,8 @@ val flywaydbVersion: String by project
 
 val detektVersion: String by project
 
+val kotestVersion: String by project
+
 val testcontainersVersion = "1.16.0"
 
 plugins {
@@ -59,11 +61,12 @@ dependencies {
 
     // Testcontainers
     testImplementation("org.testcontainers:postgresql:1.16.0")
-
     testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
 
+    // Kotest
+    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
 }
 
 apply(from = "detekt.gradle")

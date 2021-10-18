@@ -14,9 +14,6 @@ import javax.persistence.Table
 @Entity
 data class LikePhoto(
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
-
     @Column(nullable = false)
     var isLike: Boolean,
 
@@ -27,5 +24,9 @@ data class LikePhoto(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photo_id", referencedColumnName = "id", nullable = false)
     var photo: Photo
+) {
 
-)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
+}

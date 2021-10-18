@@ -18,8 +18,6 @@ import javax.persistence.Table
 @Table(name = "photos")
 @Entity
 data class Photo(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
 
     @Column(nullable = false)
     var link: String,
@@ -31,15 +29,18 @@ data class Photo(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     var event: Event,
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
+
+    @OneToMany(mappedBy = "photo", cascade = [CascadeType.ALL])
+    var likePhotos: MutableList<LikePhoto> = mutableListOf()
 
     @CreatedDate
     @Column(nullable = false)
-    var createdDt: Instant,
+    var createdDt: Instant = Instant.now()
 
     @LastModifiedDate
-    var updatedDt: Instant,
-
-    @OneToMany(mappedBy = "photo", cascade = [CascadeType.ALL])
-    var likePhotos: MutableList<LikePhoto>,
-
-)
+    var updatedDt: Instant = Instant.now()
+}

@@ -13,14 +13,14 @@ import javax.persistence.Table
 @Entity
 data class Category(
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
-
     @Column(nullable = false)
     var name: String,
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
 
-// зависимая сторона
+    // зависимая сторона
     @ManyToMany(mappedBy = "categories", cascade = [CascadeType.ALL])
-    var events: MutableList<Event>
-
-)
+    var events: MutableList<Event> = mutableListOf()
+}
