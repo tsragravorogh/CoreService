@@ -67,6 +67,13 @@ dependencies {
 
     // Kotest
     testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
+
+    //Spring Security
+    //implementation("org.springframework.security:spring-security-crypto:3.1.0.RELEASE")
+    implementation("org.springframework.security:spring-security-config:5.5.2")
+    implementation("org.springframework.boot:spring-boot-starter-security:2.5.6")
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("org.springframework.security:spring-security-jwt:1.1.1.RELEASE")
 }
 
 apply(from = "detekt.gradle")
