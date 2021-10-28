@@ -74,6 +74,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security:2.5.6")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("org.springframework.security:spring-security-jwt:1.1.1.RELEASE")
+
+    //Test
+    testImplementation("io.rest-assured:rest-assured:4.4.0")
+
 }
 
 apply(from = "detekt.gradle")

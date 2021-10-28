@@ -14,13 +14,19 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import java.util.*
 import kotlin.collections.HashMap
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 
 @Controller
 class AuthController(private val userService: UserService) {
 
+    private val logger: Logger = LoggerFactory.getLogger("com.dataart.coreservice.logback")
+
     @PostMapping("/register")
     fun register(@RequestBody body: RegisterDTO): ResponseEntity<Any> {
-        var userFromDb = userService.findByEmail(body.email)
+        val userFromDb = userService.findByEmail(body.email)
+        logger.info("Saving user' request: {}", body.toString())
         val passwordEncoder = BCryptPasswordEncoder()
         if (userFromDb == null) {
             val user = User(
@@ -30,6 +36,8 @@ class AuthController(private val userService: UserService) {
                 password = passwordEncoder.encode(body.password), ""
             )
             val savedUser = this.userService.save(user)
+
+            logger.info("New user was saved: {}", body.email)
 
             val response: HashMap<String, Any> = HashMap()
 
@@ -46,14 +54,20 @@ class AuthController(private val userService: UserService) {
 
             return ResponseEntity.status(201).body(response)
         }
-        return ResponseEntity.badRequest().body(HttpStatus.CONFLICT)
+        logger.info("User was not saved: {}", body.email)
+        val bodyResponse = HashMap<String, Any> ()
+        bodyResponse.put("email", body.email)
+        return ResponseEntity.status(409).body(bodyResponse)
     }
 
     @PostMapping("/login")
     fun login(@RequestBody body: LoginDTO): ResponseEntity<Any> {
+        logger.info("User authorization request: {}", body.toString())
         val user = this.userService.findByEmail(body.email)
             ?: return ResponseEntity(HttpStatus.UNAUTHORIZED)
-
+        if (!user.comparePassword(body.password)) {
+            return ResponseEntity(HttpStatus.UNAUTHORIZED)
+        }
 
         val issuer = user.id.toString()
 
@@ -66,6 +80,7 @@ class AuthController(private val userService: UserService) {
 
         response.put("userid", user.id)
         response.put("token", jwt)
+        logger.info("User was authorized: {}", body.email)
 
         return ResponseEntity.ok().body(response)
     }
