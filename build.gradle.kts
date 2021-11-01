@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+import java.util.regex.Pattern.compile
 
 val projectVersion: String by project
 val groupName: String by project
@@ -17,6 +19,15 @@ val kotestVersion: String by project
 
 val testcontainersVersion = "1.16.0"
 
+val mapStructVersion = "1.5.0.Beta1"
+val mockkVersion: String by project
+val springSecurityConfigVersion: String by project
+val springStarterConfigVersion: String by project
+val jjwtVersion: String by project
+val springSecurityJwtVersion: String by project
+val assuredTestVersion: String by project
+
+
 plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
@@ -25,6 +36,7 @@ plugins {
     kotlin("plugin.jpa")
     kotlin("plugin.allopen")
     id("io.gitlab.arturbosch.detekt")
+    kotlin("kapt") version "1.5.31"
 }
 
 group = groupName
@@ -70,14 +82,20 @@ dependencies {
 
     //Spring Security
     //implementation("org.springframework.security:spring-security-crypto:3.1.0.RELEASE")
-    implementation("org.springframework.security:spring-security-config:5.5.2")
-    implementation("org.springframework.boot:spring-boot-starter-security:2.5.6")
-    implementation("io.jsonwebtoken:jjwt:0.9.1")
-    implementation("org.springframework.security:spring-security-jwt:1.1.1.RELEASE")
+    implementation("org.springframework.security:spring-security-config:$springSecurityConfigVersion")
+    implementation("org.springframework.boot:spring-boot-starter-security:$springStarterConfigVersion")
+    implementation("io.jsonwebtoken:jjwt:$jjwtVersion")
+    implementation("org.springframework.security:spring-security-jwt:$springSecurityJwtVersion")
 
     //Test
-    testImplementation("io.rest-assured:rest-assured:4.4.0")
+    testImplementation("io.rest-assured:rest-assured:$assuredTestVersion")
 
+
+    //mockk
+    testImplementation("io.mockk:mockk:1.12.0")
+    // mapstruct
+    implementation("org.mapstruct:mapstruct:$mapStructVersion")
+    kapt("org.mapstruct:mapstruct-processor:$mapStructVersion")
 }
 
 apply(from = "detekt.gradle")

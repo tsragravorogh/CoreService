@@ -67,8 +67,4 @@ data class User(
 
     @LastModifiedDate
     var updatedDt: Instant = Instant.now()
-
-    fun comparePassword(password: String): Boolean {
-        return BCryptPasswordEncoder().matches(password, this.password)
-    }
 }
