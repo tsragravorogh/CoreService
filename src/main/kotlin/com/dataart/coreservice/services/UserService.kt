@@ -17,20 +17,20 @@ import kotlin.collections.HashMap
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val userMapper : UserMapper) {
+    private val userMapper: UserMapper
+) {
     private val bCryptPasswordEncoder = BCryptPasswordEncoder()
-
 
     private val logger: Logger = LoggerFactory.getLogger("com.dataart.coreservice.logback")
 
-    fun register(body: UserDto) : HashMap<String, Any> {
+    fun register(body: UserDto): HashMap<String, Any> {
         val userFromDb = userRepository.findByEmail(body.email)
         logger.trace("Saving user ", body.desc())
-        if(userFromDb.isEmpty) {
+        if (userFromDb.isEmpty) {
             val newUser = userMapper.toEntity(body)
 
             newUser.password = bCryptPasswordEncoder.encode(body.password)
-            val newUserId : Long = userRepository.save(newUser).id
+            val newUserId: Long = userRepository.save(newUser).id
             val response: HashMap<String, Any> = HashMap()
 
             val issuer = newUserId.toString()
@@ -42,9 +42,9 @@ class UserService(
 
             response["userid"] = newUserId
             response["token"] = jwt
-            logger.trace("Register response", response)
+            logger.trace("Successful registration. Response: ", response)
             return response
-        }else{
+        } else {
             logger.trace("User already exists ", body.desc())
             throw UserAlreadyExistException(userFromDb.get().email)
         }
@@ -53,9 +53,9 @@ class UserService(
     fun login(body: UserDto): HashMap<String, Any> {
         logger.trace("Login user ", body.desc())
         val user = userRepository.findByEmail(body.email)
-        if(user.isEmpty || !comparePassword(body.email, user.get().password)) {
+        if (user.isEmpty || !comparePassword(body.email, user.get().password)) {
             logger.trace("Wrong login or password ", body.desc())
-            throw WrongLoginOrPasswordException()}
+            throw WrongLoginOrPasswordException() }
 
         val issuer = user.get().id.toString()
 
@@ -68,7 +68,7 @@ class UserService(
 
         response["userid"] = user.get().id
         response["token"] = jwt
-        logger.trace("Successful login  ", response)
+        logger.trace("Successful login. Response: ", response)
         return response
     }
 

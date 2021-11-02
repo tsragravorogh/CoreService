@@ -17,7 +17,7 @@ import org.testcontainers.utility.DockerImageName
 @Testcontainers
 abstract class AbstractTestClass(
     @Autowired val testRest: TestRestTemplate
-){
+) {
 
     companion object {
         @Container

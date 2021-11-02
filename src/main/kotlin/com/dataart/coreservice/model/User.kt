@@ -2,7 +2,6 @@ package com.dataart.coreservice.model
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.time.Instant
 import javax.persistence.CascadeType
 import javax.persistence.Column

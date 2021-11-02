@@ -10,8 +10,7 @@ import org.mapstruct.ReportingPolicy
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 interface UserMapper {
 
-    //fun toDto(user: User): UserDto
-
+    // fun toDto(user: User): UserDto
 
     @Mappings(
     Mapping(target = "name", source = "userDto.name"),
@@ -21,6 +20,4 @@ interface UserMapper {
     Mapping(target = "linkAva", ignore = true),
     )
     fun toEntity(userDto: UserDto): User
-
-
 }

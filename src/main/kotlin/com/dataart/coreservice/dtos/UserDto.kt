@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class UserDto (
+class UserDto(
     @JsonProperty("name")
     var name: String? = null,
 
@@ -17,5 +17,8 @@ class UserDto (
     @JsonProperty("password")
     var password: String
 ) : Describing {
-
+    @Override
+    override fun desc(): String {
+        return super.desc()
+    }
 }

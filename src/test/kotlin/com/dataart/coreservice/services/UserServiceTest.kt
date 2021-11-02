@@ -4,14 +4,12 @@ import com.dataart.coreservice.AbstractTestClass
 import com.dataart.coreservice.dtos.UserDto
 import com.dataart.coreservice.exception.UserAlreadyExistException
 import com.dataart.coreservice.exception.WrongLoginOrPasswordException
-import com.dataart.coreservice.mappers.UserMapper
 import com.dataart.coreservice.model.User
 import com.dataart.coreservice.repository.UserRepository
 import com.ninjasquad.springmockk.MockkBean
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,7 +17,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils
 import java.util.*
-
 
 class UserServiceTest(
     @Autowired testRest: TestRestTemplate,
@@ -66,8 +63,8 @@ class UserServiceTest(
 
     @Test
     fun `Verify that user isn't registered and UserAlreadyExistException is thrown`() {
-        //create a user
-        //didn't register
+        // create a user
+        // didn't register
         val email = RandomStringUtils.randomAlphabetic(textValueLength)
         val passwordToDto = RandomStringUtils.randomAlphabetic(textValueLength)
         val password = BCryptPasswordEncoder().encode("email")
@@ -104,7 +101,7 @@ class UserServiceTest(
         )
         val randomName = RandomStringUtils.randomAlphabetic(textValueLength)
         val randomSurname = RandomStringUtils.randomAlphabetic(textValueLength)
-        val userFromRepo = User (
+        val userFromRepo = User(
             randomName,
             randomSurname,
             email,
@@ -138,9 +135,6 @@ class UserServiceTest(
         }
         verify { userRepository.findByEmail(email) }
     }
-
-
-
 
 //    @Autowired val testRest = TestRestTemplate()
 //

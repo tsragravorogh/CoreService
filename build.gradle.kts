@@ -1,6 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-import java.util.regex.Pattern.compile
 
 val projectVersion: String by project
 val groupName: String by project
@@ -17,9 +15,9 @@ val detektVersion: String by project
 
 val kotestVersion: String by project
 
-val testcontainersVersion = "1.16.0"
+val testcontainersVersion: String by project
 
-val mapStructVersion = "1.5.0.Beta1"
+val mapStructVersion: String by project
 val mockkVersion: String by project
 val springSecurityConfigVersion: String by project
 val springStarterConfigVersion: String by project
@@ -78,9 +76,6 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
 
-    // Kotest
-    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
-
     //Spring Security
     implementation("org.springframework.security:spring-security-config:$springSecurityConfigVersion")
     implementation("org.springframework.boot:spring-boot-starter-security:$springStarterConfigVersion")
@@ -91,8 +86,8 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured:$assuredTestVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("com.ninja-squad:springmockk:$springmockkVersion")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
 
-    //mockk
     // mapstruct
     implementation("org.mapstruct:mapstruct:$mapStructVersion")
     kapt("org.mapstruct:mapstruct-processor:$mapStructVersion")
