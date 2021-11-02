@@ -1,55 +1,46 @@
 package com.dataart.coreservice.controllers
 
 import com.dataart.coreservice.AbstractTestClass
+import com.dataart.coreservice.dtos.UserDto
 import com.dataart.coreservice.repository.UserRepository
 import com.dataart.coreservice.services.UserService
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpStatus
+import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils
 
 
-class AuthControllerTest(
+class AuthControllerTest (
     @Autowired val userRepository: UserRepository,
-    @Autowired val userService: UserService,
     @Autowired testRest: TestRestTemplate
 ) : AbstractTestClass(testRest) {
 
-    private val EVENT_URI_LOGIN = "/login"
-    private val EVENT_URI_REGISTER = "/register"
-    private val text_value_length = 6;
+    private val REGISTER_URI = "/register"
+    private val LOGIN_URI = "/login"
 
-//    private val requestLoginBody: LoginDto = LoginDto("a2@a.com", "111")
+    private val textValueLength = 6
 
     @Test
-    fun `Verify that POST login works correctly`() {
-//        val expectedId: Long = userRepository.count() + 1
-//
-//        val loginUser = randomAlphabetic(text_value_length)
-//        val passwordUser = randomAlphabetic(text_value_length)
-//
-//        val testedUser: User = userRepository.save(
-//            User(
-//                randomAlphabetic(text_value_length),
-//                randomAlphabetic(text_value_length),
-//                loginUser,
-//                passwordUser,
-//                randomAlphabetic(text_value_length)
-//            )
-//        )
-//
-//        var userRequest = LoginDTO(
-//                loginUser,
-//                passwordUser)
-//
-//        with(
-//            testRest
-//                .postForEntity(EVENT_URI_LOGIN, userRequest, Map)
-//                {
-//
-//                }
-//        )
+    fun `Verify that POST register works correctly`() {
+        val email = RandomStringUtils.randomAlphabetic(textValueLength)
+        val password = RandomStringUtils.randomAlphabetic(textValueLength)
+        val registerRequest = UserDto(
+            RandomStringUtils.randomAlphabetic(textValueLength),
+            RandomStringUtils.randomAlphabetic(textValueLength),
+            email,
+            password
+        )
+        with(
+            testRest
+                .postForEntity(REGISTER_URI, registerRequest, HashMap::class.java)
+        ) {
+            statusCode shouldBe HttpStatus.OK
+            body shouldNotBe null
+            print(body)
+        }
 
-            //Assertions.assertEquals(200, response.statusCode)
-//        Assertions.assertEquals()
     }
 }

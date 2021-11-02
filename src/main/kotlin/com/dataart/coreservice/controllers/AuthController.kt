@@ -23,6 +23,6 @@ class AuthController(private val userService: UserService) {
     @PostMapping("/login")
     fun login(@RequestBody body: UserDto) = with(body) {
         logger.trace("Login request came: ", desc())
-        userService.findByEmail(this)
+        userService.login(this)
     }
 }

@@ -6,4 +6,6 @@ import java.util.*
 
 interface UserRepository : CrudRepository<User, Long> {
     fun findByEmail(email: String) : Optional<User>
+
+    fun save(user: User) : User
 }

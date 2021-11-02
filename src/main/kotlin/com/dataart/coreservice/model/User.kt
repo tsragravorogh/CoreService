@@ -33,7 +33,7 @@ data class User(
     @Column(nullable = false)
     var password: String,
 
-    var linkAva: String,
+    var linkAva: String? = null
 ) {
 
     @Id

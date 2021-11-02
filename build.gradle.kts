@@ -26,6 +26,7 @@ val springStarterConfigVersion: String by project
 val jjwtVersion: String by project
 val springSecurityJwtVersion: String by project
 val assuredTestVersion: String by project
+val springmockkVersion: String by project
 
 
 plugins {
@@ -81,7 +82,6 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
 
     //Spring Security
-    //implementation("org.springframework.security:spring-security-crypto:3.1.0.RELEASE")
     implementation("org.springframework.security:spring-security-config:$springSecurityConfigVersion")
     implementation("org.springframework.boot:spring-boot-starter-security:$springStarterConfigVersion")
     implementation("io.jsonwebtoken:jjwt:$jjwtVersion")
@@ -89,10 +89,10 @@ dependencies {
 
     //Test
     testImplementation("io.rest-assured:rest-assured:$assuredTestVersion")
-
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("com.ninja-squad:springmockk:$springmockkVersion")
 
     //mockk
-    testImplementation("io.mockk:mockk:1.12.0")
     // mapstruct
     implementation("org.mapstruct:mapstruct:$mapStructVersion")
     kapt("org.mapstruct:mapstruct-processor:$mapStructVersion")
