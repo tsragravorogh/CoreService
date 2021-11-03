@@ -11,6 +11,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -38,7 +40,7 @@ class UserService(
 
             val jwt = Jwts.builder()
                 .setIssuer(issuer)
-                .setExpiration(Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000)) // 1 day
+                .setExpiration(Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant())) // 1 day
                 .signWith(SignatureAlgorithm.HS512, "secret").compact()
 
             response["userid"] = newUserId
