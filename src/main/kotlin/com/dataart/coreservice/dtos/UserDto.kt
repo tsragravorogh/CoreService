@@ -2,6 +2,7 @@ package com.dataart.coreservice.dtos
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.time.Instant
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class UserDto(
@@ -15,7 +16,11 @@ class UserDto(
     var email: String,
 
     @JsonProperty("password")
-    var password: String
+    var password: String,
+
+    @JsonProperty("createdDt")
+    var createdDt: Instant = Instant.now()
+
 ) : Describing {
     @Override
     override fun desc(): String {

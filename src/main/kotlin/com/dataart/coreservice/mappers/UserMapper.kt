@@ -18,6 +18,7 @@ interface UserMapper {
     Mapping(target = "email", source = "userDto.email"),
     Mapping(target = "password", source = "userDto.password"),
     Mapping(target = "linkAva", ignore = true),
+    Mapping(target = "createdDt", source = "userDto.createdDt")
     )
     fun toEntity(userDto: UserDto): User
 }

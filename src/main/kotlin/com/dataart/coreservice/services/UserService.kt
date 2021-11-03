@@ -27,10 +27,11 @@ class UserService(
         val userFromDb = userRepository.findByEmail(body.email)
         logger.trace("Saving user ", body.desc())
         if (userFromDb.isEmpty) {
-            val newUser = userMapper.toEntity(body)
+            var newUser = userMapper.toEntity(body)
 
             newUser.password = bCryptPasswordEncoder.encode(body.password)
-            val newUserId: Long = userRepository.save(newUser).id
+            newUser = userRepository.save(newUser)
+            val newUserId = newUser.id
             val response: HashMap<String, Any> = HashMap()
 
             val issuer = newUserId.toString()
